@@ -1,6 +1,6 @@
 program read_pulse
 
-  implicit none    ! Require all variables to be explicitly declared
+  implicit none
 
   integer, parameter :: idp = kind(1.0d0)
   real(idp) :: t(1199)
@@ -11,7 +11,10 @@ program read_pulse
   character(len=2) :: comment
   integer :: i, error
 
-  ! read in original pulse
+  ! Read in original pulse
+  !
+  ! Note that we assume that arrays t, x, y already have the correct size.
+  ! This makes reading quite simple.
   open(110, file='pulse.dat', action='READ')
   i = 1
   do
@@ -24,20 +27,33 @@ program read_pulse
   end do
   close(110)
 
-  ! write it out
+  ! Write it out
+  !
+  ! Good practice: In the first row of the file, write a comment of how many
+  ! lines of data are in the file. That way, when we want to read in the file
+  ! again, we can allocate the data arrays to the correct size before continuing
+  ! to read data.
+  !
+  ! Also, *always* write a proper header to your data file, so that you know
+  ! which column contains what later on
   open(110, file='pulse.out', action='WRITE')
   comment = "# "
   write(110, '(A2,I8," data rows")') comment, size(t)
   write(110, '(A2,A23,2A25)')                                                  &
   &    comment, "time [ns]", "Re(ampl) [MHz]", "Im(ampl) [MHz]"
+  ! The columns labels will be right-adjusted. Note how 'A25' matches 'ES25.16'
+  ! below.
   do i = 1, size(t)
     write(110, '(3ES25.16)') t(i), x(i), y(i)
   end do
   close(110)
 
-  ! read it in again -- without knowing the size a-priori
+  ! Read it in again -- without knowing the size a-priori
+  !
+  ! First, we read the size information from the commment in the first line, and
+  ! allocate t2, x2, y2
   open(110, file='pulse.out', action='READ')
-  read(110, *, iostat=error) comment, n
+  read(110, *, iostat=error) comment, n ! remainder of line is ignored
   if (error == 0) then
     allocate(t2(n))
     allocate(x2(n))
@@ -46,6 +62,7 @@ program read_pulse
     write(*,*) "No size information in file"
     stop
   end if
+  ! Then, we read the actual data like before
   i = 1
   do
     read(110,*,iostat=error) t2(i), x2(i), y2(i)
@@ -57,7 +74,8 @@ program read_pulse
   end do
   close(110)
 
-  ! write it out once more
+  ! Write it out once more (to check that everything was read correctly --
+  ! pulse.out and pulse.out2 should be identical)
   open(110, file='pulse.out2', action='WRITE')
   comment = "# "
   write(110, '(A2,I8," data rows")') comment, size(t)
@@ -68,7 +86,7 @@ program read_pulse
   end do
   close(110)
 
-  ! clean up
+  ! Clean up
   deallocate(t2, x2, y2)
 
 end program read_pulse
