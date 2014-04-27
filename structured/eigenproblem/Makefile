@@ -19,6 +19,8 @@ OBJ = constants.o globals.o
 
 all: eigenproblem
 
+globals.o: constants.o
+
 eigenproblem: $(OBJ) eigenproblem.o
 	$(FC) $(FFLAGS) -o $@ $(OBJ) eigenproblem.o $(LDFLAGS) $(LIBS)
 
