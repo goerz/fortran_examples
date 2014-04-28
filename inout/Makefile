@@ -22,6 +22,7 @@ read_pulse: read_pulse.o
 
 clean:
 	rm -f *.o
+	rm -f *.eps
 	rm -f read_pulse
 	rm -rf *.out *.out2
 
