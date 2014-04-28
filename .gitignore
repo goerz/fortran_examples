@@ -1,0 +1,9 @@
+*.o
+*.mod
+*.a
+inout/read_pulse
+library/eigenprog/eigenproblem
+simple/cylinder
+simple/eigenproblem
+simple/expvalue
+structured/eigenproblem/eigenproblem
