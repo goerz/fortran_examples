@@ -13,6 +13,8 @@ Kassel
     │   └── eigenproblem.f90:      Illustrates user-defined types,
     │                              use of external library routines
     ├── inout
+    │   ├── pulse.plt              Gnuplot example for a simple plot (pub-ready)
+    │   ├── pulse_multi.plt        Gnuplot example for a multi-plot (pub-ready)
     │   └── read_pulse.f90:        Illustrates how to read/write numerical data
     ├── structured
     │    └── eigenproblem:         Version of simple/eigenproblem, using modules
