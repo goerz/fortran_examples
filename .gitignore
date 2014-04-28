@@ -1,6 +1,7 @@
 *.o
 *.mod
 *.a
+*.eps
 inout/read_pulse
 library/eigenprog/eigenproblem
 simple/cylinder
