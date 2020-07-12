@@ -16,6 +16,9 @@ Kassel
     │   ├── pulse.plt              Gnuplot example for a simple plot (pub-ready)
     │   ├── pulse_multi.plt        Gnuplot example for a multi-plot (pub-ready)
     │   └── read_pulse.f90:        Illustrates how to read/write numerical data
+    ├── arraypassing
+    │   ├── arraypassing.f90       Fortran program for illustrating array-passing concepts
+    │   └── Makefile               Makefile for compiling arraypassing.f90 with gfortran
     ├── structured
     │    └── eigenproblem:         Version of simple/eigenproblem, using modules
     │        ├── Makefile
